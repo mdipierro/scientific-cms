@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <link href="css/stupid.css" rel="stylesheet" type="text/css"/>
+    <link href="css/cms.css" rel="stylesheet" type="text/css"/>
+  </head>
+  <body class="black">
+    <div v-cloak id="target" class="container">
+      <div class="fill black">
+        <div class="padded">
+          <h2>Output</h2>
+        </div>
+      </div>
+      <div class="fill white">
+        <div class="padded output" v-html="metamarked(input)"></div>
+      </div>
+      <div class="fill black accordion">
+        <label for="input">Input</label>
+        <input id="input" class="padded" type="checkbox">
+        <div class="padded">
+          <textarea class="padded" v-model="input"></textarea>
+        </div>
+      </div>
+      <div class="fill black accordion">
+        <label for="code">Code</label>
+        <input id="code" class="padded" type="checkbox">
+        <div class="padded">
+          <textarea v-model="code"></textarea>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="js/jquery.min.js"></script>
+  <script src="js/vue.min.js"></script>
+  <script src="js/vue.marked.js"></script>
+  <script src="js/axios.min.js"></script>
+  <script src="js/cms.js"></script>
+</html>
+
+ 

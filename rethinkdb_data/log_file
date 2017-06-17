@@ -1,0 +1,22 @@
+2017-06-16T10:28:31.094037000 0.061172s notice: Recursively removing directory /Users/massimodipierro/Dropbox/CurrentProjects/Japan/rethinkdb_data/tmp
+2017-06-16T10:28:31.096580000 0.063720s notice: Initializing directory /Users/massimodipierro/Dropbox/CurrentProjects/Japan/rethinkdb_data
+2017-06-16T10:28:31.096701000 0.063836s info: Creating a default database for your convenience. (This is because you ran 'rethinkdb' without 'create', 'serve', or '--join', and the directory '/Users/massimodipierro/Dropbox/CurrentProjects/Japan/rethinkdb_data' did not already exist or is empty.)
+2017-06-16T10:28:31.096938000 0.064073s notice: Running rethinkdb 2.3.5 (CLANG 7.3.0 (clang-703.0.31))...
+2017-06-16T10:28:31.133140000 0.100276s notice: Running on Darwin 15.6.0 x86_64
+2017-06-16T10:28:31.133194000 0.100328s notice: Loading data from directory /Users/massimodipierro/Dropbox/CurrentProjects/Japan/rethinkdb_data
+2017-06-16T10:28:31.212573000 0.179707s info: Automatically using cache size of 100 MB
+2017-06-16T10:28:31.212588000 0.179722s warn: Cache size does not leave much memory for server and query overhead (available memory: 931 MB).
+2017-06-16T10:28:31.212596000 0.179730s warn: Cache size is very low and may impact performance.
+2017-06-16T10:28:31.213574000 0.180708s notice: Listening for intracluster connections on port 29015
+2017-06-16T10:28:31.217589000 0.184723s notice: Listening for client driver connections on port 28015
+2017-06-16T10:28:31.217734000 0.184869s notice: Listening for administrative HTTP connections on port 8080
+2017-06-16T10:28:31.217737000 0.184871s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2017-06-16T10:28:31.217742000 0.184876s notice: Listening on driver addresses: 127.0.0.1, ::1
+2017-06-16T10:28:31.217743000 0.184877s notice: Listening on http addresses: 127.0.0.1, ::1
+2017-06-16T10:28:31.217747000 0.184881s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-06-16T10:28:31.217751000 0.184885s notice: Server ready, "me_onn" 0358c0ac-d363-4c39-b024-0d09c39f7530
+2017-06-16T10:28:33.684907000 2.651909s notice: Server got SIGINT from pid 243, uid 501; shutting down...
+2017-06-16T10:28:33.685255000 2.652256s notice: Shutting down client connections...
+2017-06-16T10:28:33.685428000 2.652430s notice: All client connections closed.
+2017-06-16T10:28:33.685434000 2.652435s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2017-06-16T10:28:33.690028000 2.657030s notice: Storage engine shut down.
