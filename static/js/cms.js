@@ -31,6 +31,8 @@ let init_app = () => {
     app.filters = {
     };
     app.watch = {
+        input: () => {app.send_data();},
+        code: () => {app.send_data();},
     };
     app.vue = new Vue({el: '#target', data: app.data, methods: app.methods, filters: app.filters, watch: app.watch});
     app.process = () => {
@@ -52,6 +54,9 @@ let init_app = () => {
         let name = event.target.id.substr(6);
         app.vue.values[name] = value;
         app.vue.formulas[name] = value;
+        app.send_data();
+    };
+    app.send_data = () => {
         data = {'formulas':app.vue.formulas, 'code':app.vue.code};
         app.ws.send(JSON.stringify(data));
     };
