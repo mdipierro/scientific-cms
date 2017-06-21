@@ -1,15 +1,20 @@
 let init_app = () => {
     let app = {};
     app.metamarked = (text) => {
-        text = text.replace(/\[\[(\w+)\]\]/g,(m)=>{
-                return '<input id="input-'+m.substr(2,m.length-4)+'"/>';
+        text = text.replace(/\[\[(\w+\:.*?)\]\]/g,(m)=>{
+                let idx = m.indexOf(':');
+                let name = m.substr(2,idx-2);
+                let value = m.substr(idx+1,m.length-idx-3);
+                app.vue.values[name] = value;
+                app.vue.formulas[name] = value;
+                return '<input id="input-'+name+'" value="'+value+'"/>';
             });
-        text = text.replace(/\[\[(\w+\=.*?)\]\]/g,(m)=>{
+        text = text.replace(/\[\[(\w+\=.*?)\]\]/g, (m)=>{
                 let idx = m.indexOf('=');
                 let name = m.substr(2,idx-2);
-                let formula = m.substr(idx,m.length-2);
+                let formula = m.substr(idx,m.length-idx-2);
                 app.vue.formulas[name] = formula;
-                return '<div id="output-'+name+'" >(output)</div>';
+                return '<div id="output-'+name+'" >'+formula+'</div>';
             });
         text =  marked(text);
         return text;
@@ -17,8 +22,8 @@ let init_app = () => {
     app.data = {
         input: '',
         code: '',
-        vars: {},
-        formulas: {}
+        formulas: {},
+        values: {}
     };
     app.methods = {
         metamarked: app.metamarked
@@ -28,20 +33,37 @@ let init_app = () => {
     app.watch = {
     };
     app.vue = new Vue({el: '#target', data: app.data, methods: app.methods, filters: app.filters, watch: app.watch});
+    app.process = () => {
+        let data = {'values':app.vue.values, 'formulas':app.vue.formulas};
+        axios.post('/compute',data).then(app.handle_response);
+    };
+    app.handle_response = (data) => {
+        data = JSON.parse(data);
+        for(let key in data.values) {            
+            if(data.values[key][0]=='<')
+                jQuery('#output-'+key).html(data.values[key]);
+            else
+                jQuery('#output-'+key).text(data.values[key]);
+        }
+    };
     app.onkeyup = (event) => {
         console.log('keyup');
         let value = jQuery(event.target).val();
         let name = event.target.id.substr(6);
-        app.vue.vars[name] = value;
-
-        for(let key in app.vue.vars) {
-            if(app.vue.vars[key][0]==':')
-                jQuery('#output-'+key).html(app.vue.vars[key]);
-            else
-                jQuery('#output-'+key).text(app.vue.vars[key]);
-        }
+        app.vue.values[name] = value;
+        app.vue.formulas[name] = value;
+        data = {'formulas':app.vue.formulas, 'code':app.vue.code};
+        app.ws.send(JSON.stringify(data));
     };
-    jQuery('.output').on('keyup','input',app.onkeyup);
+    
+    app.init = () => {
+        app.domain = window.location.href.split('/')[2];
+        app.ws = new ReconnectingWebSocket('ws://'+app.domain+'/websocket/test1');
+        app.ws.onopen = () => {};
+        app.ws.onmessage = (evt) => { app.handle_response(evt.data); };
+        jQuery('.output').on('keyup','input',app.onkeyup);
+    };
+    app.init();
     return app;
 };
     
