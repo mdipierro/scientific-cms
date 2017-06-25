@@ -6,11 +6,19 @@
   <body class="white">
     <div v-cloak id="target" class="container">
       <div class="fill black">
-        <div class="padded accordion">
+        <div class="padded">
           <label for="search" class="btn yellow rounded">Search</label>
+          <label for="markup" class="btn yellow rounded">Input</label>
+          <label for="code" class="btn yellow rounded">Code</label>
+          <button class="yellow rounded" v-on:click="save()"><b>Save</b></button>
+        </div>
+      </div>
+      <div class="fill black">
+        <div class="accordion">
           <input id="search" class="padded" type="checkbox">
-          <div style="margin-top:5px">
-            <input v-model="keywords">
+          <div class="black padded">
+            <strong>Search</strong>
+            <input v-model="keywords" placeholder="keywords">
             <div class="white padded">
               <table>
                 <tr v-for="item in search_results">
@@ -24,26 +32,21 @@
         </div>
       </div>
       <div class="fill black">
-        <div class="padded accordion">
-          <label for="markup" class="btn yellow rounded">Input</label>
+        <div class="accordion">          
           <input id="markup" class="padded" type="checkbox">
-          <div style="margin-top:5px">
+          <div class="padded black">
+            <strong>Markup</strong>
             <textarea class="padded" v-model="markup"></textarea>
           </div>
         </div>
       </div>
       <div class="fill black">
-        <div class="padded accordion">
-          <label for="code" class="btn yellow rounded">Code</label>
+        <div class="accordion">          
           <input id="code" class="padded" type="checkbox">
-          <div style="margin-top:5px">
+          <div class="padded black">
+            <strong>Code</strong>
             <textarea v-model="code"></textarea>
           </div>
-        </div>
-      </div>
-      <div class="fill black">
-        <div class="padded">
-          <button class="yellow rounded" v-on:click="save()"><b>Save</b></button>
         </div>
       </div>
       <div class="fill white">
