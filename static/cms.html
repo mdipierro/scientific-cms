@@ -7,24 +7,50 @@
     <div v-cloak id="target" class="container">
       <div class="fill black">
         <div class="padded accordion">
-          <label for="input" class="yellow rounded">Input</label>
-          <input id="input" class="padded" type="checkbox">
+          <label for="search" class="btn yellow rounded">Search</label>
+          <input id="search" class="padded" type="checkbox">
           <div style="margin-top:5px">
-            <textarea class="padded" v-model="input"></textarea>
+            <input v-model="keywords">
+            <div class="white padded">
+              <table>
+                <tr v-for="item in search_results">
+                  <td>
+                    <a v-bind:href="'/static/cms.html#'+item['id']">{{item['title']}}</a>
+                  </td>
+                </tr>
+              </table>
+            </div>
           </div>
         </div>
       </div>
       <div class="fill black">
         <div class="padded accordion">
-          <label for="code" class="yellow rounded">Code</label>
+          <label for="markup" class="btn yellow rounded">Input</label>
+          <input id="markup" class="padded" type="checkbox">
+          <div style="margin-top:5px">
+            <textarea class="padded" v-model="markup"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="fill black">
+        <div class="padded accordion">
+          <label for="code" class="btn yellow rounded">Code</label>
           <input id="code" class="padded" type="checkbox">
           <div style="margin-top:5px">
             <textarea v-model="code"></textarea>
           </div>
         </div>
       </div>
+      <div class="fill black">
+        <div class="padded">
+          <button class="yellow rounded" v-on:click="save()"><b>Save</b></button>
+        </div>
+      </div>
       <div class="fill white">
-        <div class="padded output" v-html="metamarked(input)"></div>
+        <div class="padded">
+          <input v-model="title" placeholder="page title">
+        </div>
+        <div class="padded output" v-html="metamarked(markup)"></div>
       </div>
     </div>
   </body>

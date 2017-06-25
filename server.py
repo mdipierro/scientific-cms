@@ -1,10 +1,18 @@
-import os, uuid, json, time, ast
+import os
+import uuid
+import json
+import time
+import ast
+
 from bottle import request, Bottle, abort, static_file
 from gevent.pywsgi import WSGIServer
 from geventwebsocket import WebSocketError
 from geventwebsocket.handler import WebSocketHandler
+
 from spreadsheet import Spreadsheet
+from widgets import render
 from trivial_tools import safely, get_locker
+import pages
 
 app = Bottle()
 sheets = {}
@@ -15,44 +23,74 @@ locker = get_locker()
 def static(path):
     return static_file(path, root='static')
 
-@app.route('/websocket/<name>')
-def handle_websocket(name):
+@app.route('/pages/search')
+def search():
+    items = pages.search(request.query['keywords'].split())
+    return {'status':'success', 'data':'items'}
+
+@app.route('/pages/<name>', method="GET")
+def get_page(name):
+    item = pages.retrieve(name)
+    return {'status':'success', 'data':'item'}
+
+@app.route('/pages/<name>', method="POST")
+def post_page(name):    
+    pages.store(id=name, title=request.json['title'], markup=request.json['markup'], code=request.json['code'])
+    return {'status':'success'}
+
+@app.route('/websocket')
+def handle_websocket():
     # assign a uuid to the client
     client_id = str(uuid.uuid4()) 
-    print client_id,name,'websocket connected'
+    print client_id,'websocket connected'
     # request the websocket
     ws = request.environ.get('wsgi.websocket')
     if not ws:
         abort(400, 'Expected WebSocket request.')
     clients[client_id] = ws
-    # create the spreadsheet if does not exist
-    locker(lambda: name in sheets or sheets.update({name: Spreadsheet(name)}))
-    # look and process changes to the spreadsheet
-    print 'here',sheets[name]
-    while True:
+    state = None
+    while True:        
         try:
-            raw_data = ws.receive()
+            raw_msg = ws.receive()
         except:
             break
-        data = safely(lambda: json.loads(raw_data))
-        if not data: 
-            time.sleep(1)
-            print 'sleeping'
-            continue
-        print data
-        if 'code' in data:
-            context = {}
-            exec(data['code'], {}, context) # NOT SAFE CHECK THIS HERE
-            sheets[name].context = context
-        changes = data['formulas']
-        if changes == None: return
-        for key in changes.keys():
-            if not changes[key] == '=':
-                safely(lambda: changes.update({key:ast.literal_eval(changes[key])}))
-        changes = locker(lambda: sheets[name].process(changes))
-        ws.send(json.dumps(changes))
-        #for ows in clients.values():
-        #    safely(lambda: ows.send(json.dumps(changes)))
+        msg = safely(lambda: json.loads(raw_msg))        
+        if not msg:
+            time.sleep(0.1)
+            continue  
+        print 'msg:', msg
+        command = msg.get('command')        
+        # {command: "search", keywords: "hello world"}
+        if command == 'search': 
+            keywords = msg['keywords'].split()
+            items = pages.search(keywords)
+            ws.send(json.dumps({'command':'search-results', 'items':items}))
+        # {command: "open", id: "r18r4g18734tr1087t"}
+        elif command == 'open': 
+            id = msg['id']
+            locker(lambda: id in sheets or sheets.update({id: Spreadsheet(id)}))
+            page = pages.retrieve(id) or {'id':id, 'title':'new page', 'markup':'', 'code':''}
+            ws.send(json.dumps({'command':'page', 'page':page}))
+        # {command: "compute", id: "..." code: "...", formulas: {..}}
+        elif command == 'compute':
+            id = msg['id']
+            if not id in sheets: continue
+            sheet = sheets[id]
+            if 'code' in msg:
+                context = {}
+                exec(msg['code'], {}, context) # NOT SAFE CHECK THIS HERE
+                sheets[id].context = context
+            changes = msg['formulas']
+            if changes == None: return
+            for key in changes.keys():
+                if not changes[key] == '=':
+                    safely(lambda: changes.update({key:ast.literal_eval(changes[key])}))
+            changes = locker(lambda: sheets[id].process(changes))
+            values = {key:render(value) for key, value in changes['values'].iteritems()}
+            ws.send(json.dumps({'command':'values', 'values':values}))
+        # {command: "save", page: {id:..., title:..., markup:..., code:...} }
+        elif command == 'save':
+            pages.store(**msg['page'])
 
 def main():
     server = WSGIServer(("127.0.0.1", 8000), app, handler_class=WebSocketHandler)
