@@ -1,4 +1,8 @@
-import os, re, copy, json
+import os
+import re
+import copy
+import json
+import cPickle as pickle
 
 class Spreadsheet(object):
 
@@ -9,16 +13,17 @@ class Spreadsheet(object):
         self.formulas = {}
         self.values = {}
         self.context = {}
-        self.load(name)
 
     def load(self, name):
         if os.path.exists(name):
             with open(name) as myfile:
-                self.formulas, self.values = json.load(myfile)
+                data = pickle.load(myfile)
+                self.formulas, self.values = data['fomulas'], data['values'] 
 
     def save(self, name):
         with open(name, 'w') as myfile:
-            json.dump((self.formulas, self.values), myfile)
+            data = {'fomulas':self.formulas, 'values':self.values}
+            pickle.dump(data, myfile)
 
     def process(self, changes):
         keys = changes.keys()
@@ -56,7 +61,7 @@ class Spreadsheet(object):
                 try:
                     value = eval(value[1:], {}, values) # NOT SAFE
                 except Exception as e:
-                    value = str(e)
+                    value = '<span class="error">%s</span>' % e
             values[key] = value
         self.values = {key: values[key] for key in self.formulas}
             
@@ -68,5 +73,7 @@ def main():
     print s.process(changes)
     changes = dict(a=2, x="=3*a")
     print s.process(changes)
+    s.save('test.pickle')
+    s.load('test.pickle')
     
 if __name__ == '__main__': main()

@@ -3,33 +3,28 @@
     <link href="css/stupid.css" rel="stylesheet" type="text/css"/>
     <link href="css/cms.css" rel="stylesheet" type="text/css"/>
   </head>
-  <body class="black">
+  <body class="white">
     <div v-cloak id="target" class="container">
       <div class="fill black">
-        <div class="padded">
-          <h2>Output</h2>
-        </div>
-      </div>
-      <div class="fill white">
-        <div class="padded output" v-html="metamarked(input)"></div>
-      </div>
-      <div class="fill black">
         <div class="padded accordion">
-          <label for="input">Input</label>
+          <label for="input" class="yellow rounded">Input</label>
           <input id="input" class="padded" type="checkbox">
-          <div class="padded">
+          <div style="margin-top:5px">
             <textarea class="padded" v-model="input"></textarea>
           </div>
         </div>
       </div>
       <div class="fill black">
         <div class="padded accordion">
-          <label for="code">Code</label>
+          <label for="code" class="yellow rounded">Code</label>
           <input id="code" class="padded" type="checkbox">
-          <div class="padded">
+          <div style="margin-top:5px">
             <textarea v-model="code"></textarea>
           </div>
         </div>
+      </div>
+      <div class="fill white">
+        <div class="padded output" v-html="metamarked(input)"></div>
       </div>
     </div>
   </body>

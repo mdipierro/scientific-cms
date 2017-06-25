@@ -7,14 +7,18 @@ let init_app = () => {
                 let value = m.substr(idx+1,m.length-idx-3);
                 app.vue.values[name] = value;
                 app.vue.formulas[name] = value;
-                return '<input id="input-'+name+'" value="'+value+'"/>';
+                if(['True','False'].indexOf(value)>=0) {
+                    return '<input type="checkbox" id="input-'+name+'" value="'+value+'"/>';
+                } else {
+                    return '<input id="input-'+name+'" value="'+value+'"/>';
+                }
             });
         text = text.replace(/\[\[(\w+\=.*?)\]\]/g, (m)=>{
                 let idx = m.indexOf('=');
                 let name = m.substr(2,idx-2);
                 let formula = m.substr(idx,m.length-idx-2);
                 app.vue.formulas[name] = formula;
-                return '<div id="output-'+name+'" >'+formula+'</div>';
+                return '<span id="output-'+name+'" >'+formula+'</span>';
             });
         text =  marked(text);
         return text;

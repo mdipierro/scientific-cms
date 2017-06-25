@@ -51,7 +51,6 @@ def handle_websocket(name):
                 safely(lambda: changes.update({key:ast.literal_eval(changes[key])}))
         changes = locker(lambda: sheets[name].process(changes))
         ws.send(json.dumps(changes))
-        
         #for ows in clients.values():
         #    safely(lambda: ows.send(json.dumps(changes)))
 
