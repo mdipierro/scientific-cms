@@ -28,6 +28,7 @@ let init_app = () => {
         axios.post('/compute',data).then(app.handle_response);
     };
     app.command_page = (data) => {
+        console.log('received command "page"');
         app.vue.title = data.page.title;
         app.vue.markup = data.page.markup;
         app.vue.code = data.page.code;
@@ -58,6 +59,7 @@ let init_app = () => {
         app.send_formulas();
     };
     app.reconnected = () => {
+        console.log('reconnecting...');
         let data = {'command':'open', 'id':app.vue.id};
         app.ws.send(JSON.stringify(data));
     };   
@@ -67,11 +69,12 @@ let init_app = () => {
         app.ws.send(JSON.stringify(data));
     };
     app.send_formulas = () => {
-        data = {'command':'compute', 'id':app.vue.id, 'formulas':app.vue.formulas, 'code':app.vue.code};
+        let data = {'command':'compute', 'id':app.vue.id, 'formulas':app.vue.formulas, 'code':app.vue.code};
+        console.log(data);
         app.ws.send(JSON.stringify(data));
     };
     app.init = () => {
-        app.vue.id = window.location.hash.substr(1);
+        app.vue.id = window.location.hash.substr(1) || 'test1';
         app.domain = window.location.href.split('/')[2];
         app.ws = new ReconnectingWebSocket('ws://'+app.domain+'/websocket');
         app.ws.onopen = app.reconnected;
@@ -83,7 +86,7 @@ let init_app = () => {
         app.ws.send(JSON.stringify({'command':'search', 'keywords':app.vue.keywords}));
     };
     app.data = {
-        id: 'test1',
+        id: '',
         title: '',
         markup: '',
         code: '',
@@ -99,10 +102,10 @@ let init_app = () => {
     app.filters = {
     };
     app.watch = {
-        markup: app.send_formulas,
-        code: app.send_formulas,
-        keywords: app.search,
-        id: app.reconnect
+        'markup': app.send_formulas,
+        'keywords': app.search,
+        'id': app.reconnect,
+        'code': app.send_formulas
     };
     app.vue = new Vue({el: '#target', data: app.data, methods: app.methods, filters: app.filters, watch: app.watch});
     app.init();

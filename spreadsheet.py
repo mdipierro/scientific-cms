@@ -69,9 +69,9 @@ def main():
     import math
     s = Spreadsheet('test')
     s.context = vars(math)
-    changes = dict(x="=sin(c+a)", a=1, b=2, c='=a+d+e', d='=b-a', e='=a+b')
-    print s.process(changes)
-    changes = dict(a=2, x="=3*a")
+    formulas = dict(x="=sin(c+a)", a=1, b=2, c='=a+d+e', d='=b-a', e='=a+b')
+    print s.process(formulas)
+    changes = dict(a=2)
     print s.process(changes)
     s.save('test.pickle')
     s.load('test.pickle')

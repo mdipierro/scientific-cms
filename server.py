@@ -78,8 +78,11 @@ def handle_websocket():
             sheet = sheets[id]
             if 'code' in msg:
                 context = {}
-                exec(msg['code'], {}, context) # NOT SAFE CHECK THIS HERE
-                sheets[id].context = context
+                try:
+                    exec(msg['code'], {}, context) # NOT SAFE CHECK THIS HERE
+                    sheets[id].context = context
+                except:
+                    pass
             changes = msg['formulas']
             if changes == None: return
             for key in changes.keys():

@@ -41,3 +41,36 @@
 2017-06-27T15:58:46.774456000 13171.063128s notice: All client connections closed.
 2017-06-27T15:58:46.774470000 13171.063141s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
 2017-06-27T15:58:46.789063000 13171.077735s notice: Storage engine shut down.
+2017-06-29T18:27:14.461094000 0.054014s notice: Running rethinkdb 2.3.5 (CLANG 7.3.0 (clang-703.0.31))...
+2017-06-29T18:27:14.465853000 0.058769s notice: Running on Darwin 15.6.0 x86_64
+2017-06-29T18:27:14.465889000 0.058804s notice: Loading data from directory /Users/massimodipierro/Dropbox/CurrentProjects/Japan/rethinkdb_data
+2017-06-29T18:27:14.490486000 0.083402s info: Automatically using cache size of 4170 MB
+2017-06-29T18:27:14.491226000 0.084141s notice: Listening for intracluster connections on port 29015
+2017-06-29T18:27:14.510653000 0.103568s notice: Listening for client driver connections on port 28015
+2017-06-29T18:27:14.510871000 0.103786s notice: Listening for administrative HTTP connections on port 8080
+2017-06-29T18:27:14.510884000 0.103798s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2017-06-29T18:27:14.510886000 0.103801s notice: Listening on driver addresses: 127.0.0.1, ::1
+2017-06-29T18:27:14.510888000 0.103803s notice: Listening on http addresses: 127.0.0.1, ::1
+2017-06-29T18:27:14.510890000 0.103804s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-06-29T18:27:14.510900000 0.103815s notice: Server ready, "me_onn" 0358c0ac-d363-4c39-b024-0d09c39f7530
+2017-06-29T18:27:16.460240000 2.053107s info: Table 999d9b75-ef84-418b-af52-b0040243da10: Starting a new Raft election for term 2.
+2017-06-29T18:27:16.470767000 2.063634s info: Table 999d9b75-ef84-418b-af52-b0040243da10: This server is Raft leader for term 2. Latest log index is 3.
+2017-06-29T18:29:38.725568000 144.315072s notice: Server got SIGINT from pid 240, uid 501; shutting down...
+2017-06-29T18:29:38.725725000 144.315229s notice: Shutting down client connections...
+2017-06-29T18:29:38.725928000 144.315431s notice: All client connections closed.
+2017-06-29T18:29:38.725936000 144.315439s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2017-06-29T18:29:38.735961000 144.325464s notice: Storage engine shut down.
+2017-06-29T18:29:48.937038000 0.006847s notice: Running rethinkdb 2.3.5 (CLANG 7.3.0 (clang-703.0.31))...
+2017-06-29T18:29:48.944413000 0.014201s notice: Running on Darwin 15.6.0 x86_64
+2017-06-29T18:29:48.944464000 0.014250s notice: Loading data from directory /Users/massimodipierro/Dropbox/CurrentProjects/Japan/rethinkdb_data
+2017-06-29T18:29:48.962622000 0.032408s info: Automatically using cache size of 4080 MB
+2017-06-29T18:29:48.963476000 0.033262s notice: Listening for intracluster connections on port 29015
+2017-06-29T18:29:48.981590000 0.051376s notice: Listening for client driver connections on port 28015
+2017-06-29T18:29:48.981783000 0.051569s notice: Listening for administrative HTTP connections on port 8080
+2017-06-29T18:29:48.981790000 0.051575s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2017-06-29T18:29:48.981791000 0.051577s notice: Listening on driver addresses: 127.0.0.1, ::1
+2017-06-29T18:29:48.981793000 0.051579s notice: Listening on http addresses: 127.0.0.1, ::1
+2017-06-29T18:29:48.981879000 0.051665s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-06-29T18:29:48.981882000 0.051667s notice: Server ready, "me_onn" 0358c0ac-d363-4c39-b024-0d09c39f7530
+2017-06-29T18:29:50.116028000 1.185814s info: Table 999d9b75-ef84-418b-af52-b0040243da10: Starting a new Raft election for term 3.
+2017-06-29T18:29:50.126012000 1.195798s info: Table 999d9b75-ef84-418b-af52-b0040243da10: This server is Raft leader for term 3. Latest log index is 6.
