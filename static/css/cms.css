@@ -5,7 +5,7 @@ textarea {
    background: red;
    color: white;
 }
-.output input {
+.output input[type=text], .output select {
     border: 1px solid silver !important;
     padding: 0.5em 1em !important;
     margin: 0.5px !important;

@@ -36,7 +36,10 @@
           <input id="markup" class="padded" type="checkbox">
           <div class="padded black">
             <strong>Markup</strong>
-            <textarea class="padded" v-model="markup"></textarea>
+            <div class="padded white">
+              <input v-model="title" placeholder="page title">
+            </div>
+            <textarea v-model="markup"></textarea>
           </div>
         </div>
       </div>
@@ -50,9 +53,6 @@
         </div>
       </div>
       <div class="fill white">
-        <div class="padded">
-          <input v-model="title" placeholder="page title">
-        </div>
         <div class="padded output" v-html="metamarked(markup)"></div>
       </div>
     </div>

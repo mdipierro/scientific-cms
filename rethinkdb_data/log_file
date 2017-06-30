@@ -74,3 +74,22 @@
 2017-06-29T18:29:48.981882000 0.051667s notice: Server ready, "me_onn" 0358c0ac-d363-4c39-b024-0d09c39f7530
 2017-06-29T18:29:50.116028000 1.185814s info: Table 999d9b75-ef84-418b-af52-b0040243da10: Starting a new Raft election for term 3.
 2017-06-29T18:29:50.126012000 1.195798s info: Table 999d9b75-ef84-418b-af52-b0040243da10: This server is Raft leader for term 3. Latest log index is 6.
+2017-06-29T21:26:59.888936000 8170.825587s notice: Server got SIGINT from pid 240, uid 501; shutting down...
+2017-06-29T21:26:59.889143000 8170.825793s notice: Shutting down client connections...
+2017-06-29T21:26:59.889479000 8170.826129s notice: All client connections closed.
+2017-06-29T21:26:59.889492000 8170.826141s notice: Shutting down storage engine... (This may take a while if you had a lot of unflushed data in the writeback cache.)
+2017-06-29T21:26:59.896934000 8170.833585s notice: Storage engine shut down.
+2017-06-29T21:27:11.629473000 0.051357s notice: Running rethinkdb 2.3.5 (CLANG 7.3.0 (clang-703.0.31))...
+2017-06-29T21:27:11.632878000 0.054760s notice: Running on Darwin 15.6.0 x86_64
+2017-06-29T21:27:11.632938000 0.054819s notice: Loading data from directory /Users/massimodipierro/Dropbox/CurrentProjects/Japan/rethinkdb_data
+2017-06-29T21:27:11.651017000 0.072898s info: Automatically using cache size of 2739 MB
+2017-06-29T21:27:11.651717000 0.073598s notice: Listening for intracluster connections on port 29015
+2017-06-29T21:27:11.681327000 0.103211s notice: Listening for client driver connections on port 28015
+2017-06-29T21:27:11.681756000 0.103637s notice: Listening for administrative HTTP connections on port 8080
+2017-06-29T21:27:11.681762000 0.103643s notice: Listening on cluster addresses: 127.0.0.1, ::1
+2017-06-29T21:27:11.681766000 0.103647s notice: Listening on driver addresses: 127.0.0.1, ::1
+2017-06-29T21:27:11.681770000 0.103650s notice: Listening on http addresses: 127.0.0.1, ::1
+2017-06-29T21:27:11.681919000 0.103800s notice: To fully expose RethinkDB on the network, bind to all addresses by running rethinkdb with the `--bind all` command line option.
+2017-06-29T21:27:11.681923000 0.103803s notice: Server ready, "me_onn" 0358c0ac-d363-4c39-b024-0d09c39f7530
+2017-06-29T21:27:12.856309000 1.278190s info: Table 999d9b75-ef84-418b-af52-b0040243da10: Starting a new Raft election for term 4.
+2017-06-29T21:27:12.871063000 1.292944s info: Table 999d9b75-ef84-418b-af52-b0040243da10: This server is Raft leader for term 4. Latest log index is 9.
