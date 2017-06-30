@@ -4,12 +4,21 @@ let init_app = () => {
         text = text.replace(/\[\[(\w+\:.*?)\]\]/g,(m)=>{
                 let idx = m.indexOf(':');
                 let name = m.substr(2,idx-2);
-                let value = m.substr(idx+1,m.length-idx-3);
-                app.vue.values[name] = value;
-                app.vue.formulas[name] = value;
+                let value = m.substr(idx+1,m.length-idx-3);                
                 if(['True','False'].indexOf(value)>=0) {
+                    app.vue.values[name] = value;
+                    app.vue.formulas[name] = value;
                     return '<input type="checkbox" id="input-'+name+'" value="'+value+'"/>';
+                } else if(value.indexOf('|')>=0) {
+                    let items = value.split('|');
+                    value = items[0];
+                    app.vue.values[name] = value;
+                    app.vue.formulas[name] = value;
+                    options = items.map((i)=>{return '<option value="'+i+'">'+i+'</option>';}).join('');
+                    return '<select id="input-'+name+'">'+options+'</select>';
                 } else {
+                    app.vue.values[name] = value;
+                    app.vue.formulas[name] = value;
                     return '<input id="input-'+name+'" value="'+value+'"/>';
                 }
             });
@@ -80,6 +89,7 @@ let init_app = () => {
         app.ws.onopen = app.reconnected;
         app.ws.onmessage = (evt) => { app.handle_response(evt.data); };
         jQuery('.output').on('keyup','input',app.onkeyup);
+        jQuery('.output').on('change','select',app.onkeyup);
         jQuery(window).on('hashchange', () => { app.vue.id=window.location.hash.substr(1); app.reconnected(); });
     };
     app.search = () => {
