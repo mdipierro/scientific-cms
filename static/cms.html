@@ -3,56 +3,49 @@
     <link href="css/stupid.css" rel="stylesheet" type="text/css"/>
     <link href="css/cms.css" rel="stylesheet" type="text/css"/>
   </head>
-  <body class="white">
+  <body class="white" style="min-height:100vh">
     <div v-cloak id="target" class="container">
-      <div class="fill black">
+      <div class="fill blue">
         <div class="padded">
-          <label for="search" class="btn yellow rounded">Search</label>
-          <label for="markup" class="btn yellow rounded">Input</label>
-          <label for="code" class="btn yellow rounded">Code</label>
-          <button class="yellow rounded" v-on:click="save()"><b>Save</b></button>
+          <h4>{{title}}</h4>
         </div>
       </div>
-      <div class="fill black">
-        <div class="accordion">
-          <input id="search" class="padded" type="checkbox">
-          <div class="black padded">
-            <strong>Search</strong>
-            <input v-model="keywords" placeholder="keywords">
-            <div class="white padded">
-              <table>
-                <tr v-for="item in search_results">
-                  <td>
-                    <a v-bind:href="'/static/cms.html#'+item['id']">{{item['title']}}</a>
-                  </td>
-                </tr>
-              </table>
+      <div class="quarter blue" style="min-height:100vh">
+        <div class="padded">
+          <label for="markup" class="btn silver rounded">Input</label>
+          <label for="code" class="btn silver rounded">Code</label>
+          <button class="silver rounded" v-on:click="save()"><b>Save</b></button>
+        </div>
+        <div class="blue padded">
+          <strong>Search</strong>
+          <input v-model="keywords" placeholder="keywords">
+          <div>
+            <div v-for="item in search_results" class="fill padded">
+              <a style="color:white" v-bind:href="'/static/cms.html#'+item['id']">{{item['title']}}</a>
             </div>
           </div>
         </div>
       </div>
-      <div class="fill black">
-        <div class="accordion">          
-          <input id="markup" class="padded" type="checkbox">
-          <div class="padded black">
-            <strong>Markup</strong>
-            <div class="padded white">
-              <input v-model="title" placeholder="page title">
+      <div class="threequarters">
+        <div class="padded">
+          <div class="accordion">          
+            <input id="markup" class="padded" type="checkbox">
+            <div class="padded blue">
+              <strong>Markup</strong>
+              <div class="padded white">
+                <input v-model="title" placeholder="page title">
+              </div>
+              <textarea v-model="markup"></textarea>
             </div>
-            <textarea v-model="markup"></textarea>
+          </div>
+          <div class="accordion">          
+            <input id="code" class="padded" type="checkbox">
+            <div class="padded blue">
+              <strong>Code</strong>
+              <textarea v-model="code"></textarea>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="fill black">
-        <div class="accordion">          
-          <input id="code" class="padded" type="checkbox">
-          <div class="padded black">
-            <strong>Code</strong>
-            <textarea v-model="code"></textarea>
-          </div>
-        </div>
-      </div>
-      <div class="fill white">
         <div class="padded output" v-html="metamarked(markup)"></div>
       </div>
     </div>

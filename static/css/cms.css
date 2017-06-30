@@ -1,5 +1,6 @@
 textarea {
    min-height: 25vh;
+   width: 100%;
 }
 .error {
    background: red;
