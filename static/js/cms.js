@@ -94,6 +94,9 @@ let init_app = () => {
         jQuery('.output').on('change','select,input[type=checkbox]',app.onkeyup);
         jQuery(window).on('hashchange', () => { app.vue.id=window.location.hash.substr(1); app.reconnected(); });
     };
+    app.tonew = () => {
+        window.location = window.location.href.split('#')[0]+'#'+Math.random();
+    };
     app.search = () => {
         app.ws.send(JSON.stringify({'command':'search', 'keywords':app.vue.keywords}));
     };
@@ -109,7 +112,8 @@ let init_app = () => {
     };
     app.methods = {
         metamarked: app.metamarked,
-        save: app.save        
+        save: app.save,      
+        tonew: app.tonew
     };
     app.filters = {
     };
