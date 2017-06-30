@@ -19,7 +19,7 @@ let init_app = () => {
                 } else {
                     app.vue.values[name] = value;
                     app.vue.formulas[name] = value;
-                    return '<input id="input-'+name+'" value="'+value+'"/>';
+                    return '<input type="text" id="input-'+name+'" value="'+value+'"/>';
                 }
             });
         text = text.replace(/\[\[(\w+\=.*?)\]\]/g, (m)=>{
@@ -61,8 +61,10 @@ let init_app = () => {
         else if(data.command == 'search-results') app.command_search_results(data);
     };
     app.onkeyup = (event) => {
-        let value = jQuery(event.target).val();
+        let elem = jQuery(event.target);
+        let value = null;
         let name = event.target.id.substr(6);
+        if(elem.attr('type')=='checkbox') value = elem.is(':checked'); else value = elem.val();
         app.vue.values[name] = value;
         app.vue.formulas[name] = value;
         app.send_formulas();
@@ -88,8 +90,8 @@ let init_app = () => {
         app.ws = new ReconnectingWebSocket('ws://'+app.domain+'/websocket');
         app.ws.onopen = app.reconnected;
         app.ws.onmessage = (evt) => { app.handle_response(evt.data); };
-        jQuery('.output').on('keyup','input',app.onkeyup);
-        jQuery('.output').on('change','select',app.onkeyup);
+        jQuery('.output').on('keyup','input[type=text]',app.onkeyup);
+        jQuery('.output').on('change','select,input[type=checkbox]',app.onkeyup);
         jQuery(window).on('hashchange', () => { app.vue.id=window.location.hash.substr(1); app.reconnected(); });
     };
     app.search = () => {
