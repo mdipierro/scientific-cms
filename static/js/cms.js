@@ -85,7 +85,7 @@ let init_app = () => {
         app.ws.send(JSON.stringify(data));
     };
     app.init = () => {
-        app.vue.id = window.location.hash.substr(1) || 'test1';
+        app.vue.id = window.location.hash.substr(1) || 'home';
         app.domain = window.location.href.split('/')[2];
         app.ws = new ReconnectingWebSocket('ws://'+app.domain+'/websocket');
         app.ws.onopen = app.reconnected;
