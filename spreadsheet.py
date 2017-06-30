@@ -30,7 +30,6 @@ class Spreadsheet(object):
         for key in changes:
             self.formulas[key] = changes[key]
         self.run()
-        self.save(self.name)
         return {'formulas':self.formulas, 'values':self.values}
 
     def find_neighbors(self):
